@@ -15,7 +15,6 @@ class IPInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchIPInfo()
-      
         // Do any additional setup after loading the view.
     }
     
@@ -34,11 +33,24 @@ class IPInfoViewController: UIViewController {
 extension IPInfoViewController:IPInfoViewDelegate{
     func fetchIPInfo() {
         ipINFOViewModel = IPInfoViewModel()
+        ipINFOViewModel.delegate = self
         ipINFOViewModel.fetchIPInfo { (array) in
             self.ipINFOViewModel.ipinfo = array
             DispatchQueue.main.async{
                 self.ipINFOViewModel.configureView(view: self.ipVIEW)
             }
         }
+    }
+}
+extension IPInfoViewController:IPInfoDelegate{
+    func fetchIPInfo(completion: @escaping ([IPInfo]) -> ()) {
+        APIManager.shared.fetchIP { (array) in
+                self.ipINFOViewModel.ipinfo = array
+                completion(self.ipINFOViewModel.ipinfo)
+        }
+    }
+    
+    func configureView(view: IPInfoView) {
+        view.lblValue.text = self.ipINFOViewModel.ipinfo.first?.ip
     }
 }
