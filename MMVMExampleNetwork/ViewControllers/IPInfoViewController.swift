@@ -43,14 +43,14 @@ extension IPInfoViewController:IPInfoViewDelegate{
     }
 }
 extension IPInfoViewController:IPInfoDelegate{
-    func fetchIPInfo(completion: @escaping ([IPInfo]) -> ()) {
-        APIManager.shared.fetchIP { (array) in
-                self.ipINFOViewModel.ipinfo = array
+    func fetchIPInfo(completion: @escaping (IPInfo) -> ()) {
+        APIManager.shared.fetchIP { (model) in
+                self.ipINFOViewModel.ipinfo = model
                 completion(self.ipINFOViewModel.ipinfo)
         }
     }
     
     func configureView(view: IPInfoView) {
-        view.lblValue.text = self.ipINFOViewModel.ipinfo.first?.ip
+        view.lblValue.text = self.ipINFOViewModel.ipinfo.ip
     }
 }

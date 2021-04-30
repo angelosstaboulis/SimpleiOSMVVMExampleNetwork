@@ -10,15 +10,15 @@ import Alamofire
 import SwiftyJSON
 class APIManager{
     static let shared = APIManager()
-    var ipINFO:[IPInfo]=[]
+    var ipINFO:IPInfo!
     private init(){}
-    func fetchIP(completion:@escaping ([IPInfo])->()){
+    func fetchIP(completion:@escaping (IPInfo)->()){
         let urlMain = URL(string: "https://api.ipify.org?format=json")
         let request = URLRequest(url: urlMain!)
         AF.request(request)
             .responseJSON { (response) in
                 let json = JSON(response.data!)
-                self.ipINFO.append(IPInfo(ip: json["ip"].stringValue))
+                self.ipINFO =  IPInfo(ip: json["ip"].stringValue)
                 completion(self.ipINFO)
             }
     }
