@@ -34,8 +34,8 @@ extension IPInfoViewController:IPInfoViewDelegate{
     func fetchIPInfo() {
         ipINFOViewModel = IPInfoViewModel()
         ipINFOViewModel.delegate = self
-        ipINFOViewModel.fetchIPInfo { (array) in
-            self.ipINFOViewModel.ipinfo = array
+        ipINFOViewModel.fetchIPInfo { (model) in
+            self.ipINFOViewModel.ipinfo = model
             DispatchQueue.main.async{
                 self.ipINFOViewModel.configureView(view: self.ipVIEW)
             }
